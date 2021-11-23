@@ -394,5 +394,8 @@ insert into api(jdoc) values ('[{"event_slug":"test_1","start_time":"2014-10-08"
  SELECT a.id, e.event_slug, e.end_time, e.start_time
  FROM  api a, jsonb_populate_recordset(null::event_type, a.jdoc) e where a.id = 34;
  ------------------------------------------
-
-
+--find the last item in an json array.
+SELECT jdoc->-1 FROM   api a  WHERE  id = 36;
+--How to query a json column for empty objects. in this case, the key is 'tags', the value pair is not empty array.
+select id,jdoc ->> 'tags' from api
+    where jdoc ->> 'tags' is not null and jdoc ->> 'tags' <> '[]'::text;
